@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <h1>Search Results for "{{ query }}"</h1>
+
+        {% for post in results %}
+            <ul>
+                <li>
+                    <h3><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h3>
+                    <p>By <a href="{% url 'user-posts' post.author.username %}">{{ post.author_username }}<a/> in <a href="{% url 'category-posts' post.category.id %}">{{ post.category_name }}</a></p>
+                    <p>{{ post.content|truncatewords:50 }}</p>
+                    <p>Published on {{ post.date_posted|date:"F d, Y" }}</p>
+                </li>
+            </ul>
+        {% empty %}
+            <p>No results found.</p>
+        {% endfor %}
+    </ul>
+{% endblock %}
